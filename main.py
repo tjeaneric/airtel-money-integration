@@ -1,11 +1,11 @@
-from fastapi import FastAPI, HTTPException, status, Request
+from fastapi import FastAPI, HTTPException, status, Depends
 from pydantic import BaseModel
-import requests, uuid
-
-
-class Transaction(BaseModel):
-    amount: int
-    phone: str
+import requests
+import models
+import crud
+from sqlalchemy.orm import Session
+from database import SessionLocal, engine
+from schemas import transactionBase
 
 
 class CallbackTr(BaseModel):
@@ -20,15 +20,30 @@ class Callback(BaseModel):
 
 
 app = FastAPI()
+models.Base.metadata.create_all(bind=engine)
+
+# Dependency
 
 
-@app.get("/")
-def home():
-    return {"message": "hello world"}
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 
-@app.post("/init-payment")
-def init_payment(payment: Transaction):
+@app.get("/transactions/", tags=['Transactions'])
+def get_transactions(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    transactions = crud.get_transactions(db, skip=skip, limit=limit)
+    print(len(transactions))
+    if len(transactions) < 1:
+        return {"message": "No transactions available"}
+    return transactions
+
+
+@app.post("/init-payment", tags=['Transactions'])
+def init_payment(payment: transactionBase, db: Session = Depends(get_db)):
     if payment.amount <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -39,6 +54,12 @@ def init_payment(payment: Transaction):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Phone number must start with either 73 or 72",
         )
+    if not (len(payment.phone) == 9):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Phone number must be 9 characters",
+        )
+    starter_transaction = crud.create_transaction(db, payment)
 
     # Requesting authorization token
 
@@ -75,7 +96,7 @@ def init_payment(payment: Transaction):
             "amount": payment.amount,
             "country": "RW",
             "currency": "RWF",
-            "id": str(uuid.uuid4()),
+            "id": starter_transaction.id,
         },
     }
 
@@ -93,13 +114,16 @@ def init_payment(payment: Transaction):
             detail=r.get("status").get("message"),
         )
 
+    starter_transaction = crud.create_transaction(db, payment)
+
     return {
         "status": "success",
+        "transaction": starter_transaction,
         "message": "Please check your phone to confirm transaction if no prompt, please dial *182*7*1#",
     }
 
 
-@app.post("/payment-callback")
+@app.post("/payment-callback", tags=['Transactions'])
 def payment_callback(request: Callback):
     # Requesting authorization token
     headers = {"Content-Type": "application/json", "Accept": "*/*"}

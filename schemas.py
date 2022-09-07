@@ -1,11 +1,11 @@
-from typing import List, Union
+from uuid import uuid4
 from pydantic import BaseModel
 
 
 class transactionBase(BaseModel):
-    id: int
-    amount: int
-    success: bool = False
+    sender_phone: str
+    receiver_phone: str
+    amount: float
 
     class Config:
         orm_mode = True

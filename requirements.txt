@@ -1,21 +1,88 @@
-anyio==3.6.1
-black==22.6.0
-certifi==2022.6.15
-charset-normalizer==2.1.1
-click==8.1.3
-fastapi==0.81.0
-FastAPI-SQLAlchemy==0.2.1
-greenlet==1.1.3
-idna==3.3
-mypy-extensions==0.4.3
-pathspec==0.9.0
-platformdirs==2.5.2
-pydantic==1.10.0
+# anyio==3.6.1
+# black==22.6.0
+# certifi==2022.6.15
+# charset-normalizer==2.1.1
+# click==8.1.3
+# fastapi==0.81.0
+# FastAPI-SQLAlchemy==0.2.1
+# greenlet==1.1.3
+# idna==3.3
+# mypy-extensions==0.4.3
+# pathspec==0.9.0
+# platformdirs==2.5.2
+# pydantic==1.10.0
+# python-decouple==3.6
+# requests==2.28.1
+# sniffio==1.2.0
+# SQLAlchemy==1.4.36
+# starlette==0.19.1
+# tomli==2.0.1
+# typing-extensions==4.3.0
+# urllib3==1.26.12
+# sqlalchemy2-stubs==0.0.2a23
+
+
 python-decouple==3.6
-requests==2.28.1
+alembic==1.7.7
+anyio==3.6.1
+arabic-reshaper==2.1.3
+asgiref==3.5.2
+asn1crypto==1.5.1
+backports.zoneinfo==0.2.1
+bcrypt==3.2.2
+certifi==2022.6.15
+cffi==1.15.0
+charset-normalizer==2.0.12
+click==8.1.3
+cryptography==37.0.4
+cssselect2==0.6.0
+fastapi==0.78.0
+FastAPI-SQLAlchemy==0.2.1
+future==0.18.2
+greenlet==1.1.2
+h11==0.13.0
+html5lib==1.1
+idna==3.3
+importlib-metadata==4.11.4
+importlib-resources==5.7.1
+lxml==4.9.1
+Mako==1.2.0
+MarkupSafe==2.1.1
+oscrypto==1.3.0
+passlib==1.7.4
+Pillow==9.2.0
+psycopg2-binary==2.9.3
+pycparser==2.21
+pydantic==1.9.1
+pyHanko==0.13.2
+pyhanko-certvalidator==0.19.5
+PyJWT==2.4.0
+PyPDF2==2.7.0
+PyPDF3==1.0.6
+python-bidi==0.4.2
+python-dotenv==0.20.0
+python-multipart==0.0.5
+pytz==2022.1
+pytz-deprecation-shim==0.1.0.post0
+PyYAML==6.0
+qrcode==7.3.1
+reportlab==3.6.11
+requests==2.27.1
+six==1.16.0
 sniffio==1.2.0
-SQLAlchemy==1.4.40
+SQLAlchemy==1.4.36
+sqlalchemy2-stubs==0.0.2a23
+sqlmodel==0.0.6
 starlette==0.19.1
-tomli==2.0.1
-typing-extensions==4.3.0
-urllib3==1.26.12
+svglib==1.3.0
+tinycss2==1.1.1
+tqdm==4.64.0
+typing-extensions==4.2.0
+tzdata==2022.1
+tzlocal==4.2
+uritools==4.0.0
+urllib3==1.26.9
+uvicorn==0.17.6
+webencodings==0.5.1
+xhtml2pdf==0.2.8
+zipp==3.8.0
